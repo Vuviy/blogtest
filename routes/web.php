@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/', [\App\Http\Controllers\Home::class, 'index'])->name('home');
+Route::get('/article/{id}', [\App\Http\Controllers\Home::class, 'article'])->name('article');
+
+Route::post('addComment', [\App\Http\Controllers\Home::class, 'addComment'])->name('addComment');
