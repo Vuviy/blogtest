@@ -4,17 +4,14 @@
 @section('content')
     <div class="d-flex justify-content-center">
         <div class="d-flex flex-column bd-highlight mb-3 w-50 p-5">
-
-
-{{--            @dd($article)--}}
-
             <div class="card mb-3">
-                <img src="{{$article->image}}" class="card-img-top" alt="...">
+                @if($article->image)
+                    <img src="@if(str_contains($article->image, 'http')) {{$article->image}} @else {{asset('storage/'. $article->image)}} @endif" class="card-img-top" alt="...">
+                @endif
                 <div class="card-body">
                     <h5 class="card-title">{{$article->title}}</h5>
                     <h5 class="card-title"><span>Author: </span>{{$article->user->name}}</h5>
                     <p class="card-text">{{$article->text}}</p>
-{{--                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>--}}
                 </div>
             </div>
 
@@ -29,12 +26,9 @@
                 </div>
                 @endforeach
             </div>
-
             <div>
-
                 <div id="errors"></div>
                 <h3>Send your comment</h3>
-
                 <form>
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -50,18 +44,8 @@
         </div>
     </div>
 
-
     <script>
-
-
-        // let commentsDiv = document.getElementsByClassName('comments-div')
-        // var divElement = document.getElementById("myDiv");
-        // console.log(commentsDiv);
-        // console.log(divElement);
-
         function addComment() {
-
-
             let name = document.getElementById("name");
             let text = document.getElementById("text");
             let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -90,13 +74,10 @@
                         errorsHtml += '</ul>';
                         document.getElementById('errors').innerHTML = errorsHtml;
                     } else {
-
                         name.value = ''
                         text.value = ''
-
                         let commentsDiv = document.getElementById("myDiv");
                         let newComment = '<div class="card mb-3"><div class="card-body"><p class="card-text">Author: '+dataJSON.name+'</p><h5 class="card-title">'+dataJSON.text+'</h5></div></div>';
-                        // commentsDiv.innerHTML += newComment;
                         commentsDiv.insertAdjacentHTML('afterbegin', newComment);
                     }
                 })
@@ -104,7 +85,6 @@
                     console.error(error);
                 });
         }
-
         document.getElementById("submitBtn").addEventListener("click", addComment);
 
     </script>
