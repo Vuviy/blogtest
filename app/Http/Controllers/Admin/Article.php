@@ -44,13 +44,33 @@ class Article extends Controller
     public function store(Request $request)
     {
 
-        $data = $request->validate([
+
+
+
+
+//        $data = $request->validate([
+//            'title' => 'required|min:5|max:70',
+//            'text' => 'required|min:5',
+//            'image' => 'image',
+//        ]);
+
+//        dd($request->all());
+
+
+//        dd(url()->current());
+
+        $validator = Validator::make($request->all(), [
             'title' => 'required|min:5|max:70',
             'text' => 'required|min:5',
             'image' => 'image',
         ]);
 
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
         $data = ['title' => $request->title, 'text' => $request->text, 'new' => 1, 'user_id' => auth()->user()->id];
+//        dd($data);
 
         if($request->hasFile('image')){
 
@@ -63,9 +83,11 @@ class Article extends Controller
 
         Log::channel('crud')->info('Article created', ['user:' => auth()->user()->id, 'article id:' => $article->id]);
 
-        $title = 'Edit';
+//        $title = 'Edit';
 
-        return redirect()->route('article.edit', ['article' => $article, 'title' => $title]);
+        return response()->json(['success' => true, 'url' =>  url()->current().'/'. $article->id. '/edit'], 202);
+
+//        return redirect()->route('article.edit', ['article' => $article, 'title' => $title]);
     }
 
     /**
