@@ -4,6 +4,7 @@ Run this commands:
 - php artisan queue:table
 - php artisan migrate
 - php artisan db:seed
+- php artisan storage:link
 - php artisan queue:work (for sending mails. End not close console)
 
 ## Admin 
