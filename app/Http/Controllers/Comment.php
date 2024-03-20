@@ -32,7 +32,7 @@ class Comment extends Controller
         if($comment)
         {
             EmailNotification::dispatch($comment);
-            return response()->json(['success' => true, 'name' => $comment->author, 'text' => $comment->text], 200);
+            return response()->json(['success' => true, 'name' => $comment->author, 'text' => $comment->text], 201);
         }
 
         return response()->json(['errors' => 'Comment not created'], 401);

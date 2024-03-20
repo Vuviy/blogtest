@@ -49,6 +49,7 @@
                         <button type="button" class="btn btn-danger" id="deleteImg">Detele Image</button>
                     @endif
                 <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
+{{--                <button type="button" id="submitBtn" class="btn btn-primary">Submit</button>--}}
             </form>
         </div>
     </div>
@@ -56,11 +57,11 @@
     <script>
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         let deleteBtn = document.getElementById("deleteImg");
+
+
         function deleteImg() {
 
-
             let formData = new FormData();
-
             formData.append('id', {{$article->id}});
 
             fetch("{{route('deleteImage')}}", {
@@ -101,7 +102,6 @@
             }
 
 
-
         {{--function edit() {--}}
 
         {{--    let title = document.getElementById("title");--}}
@@ -115,14 +115,19 @@
         {{--    formData.append('title', title.value);--}}
         {{--    formData.append('text', text.value);--}}
         {{--    formData.append('is_new', is_new.checked);--}}
-        {{--    formData.append('image', file);--}}
+        {{--    // formData.append('_method', 'PUT');--}}
+        {{--    if(file !== undefined){--}}
+        {{--        formData.append('image', file);--}}
+        {{--    }--}}
         {{--    formData.append('id', {{$article->id}});--}}
         {{--    // console.log(formData);--}}
 
         {{--    fetch("{{route('article.update', ['article' => $article->id])}}", {--}}
+        {{--    --}}{{--fetch("{{route('article.update', ['article' => $article->id])}}", {--}}
         {{--        method: 'PUT',--}}
         {{--        headers: {--}}
-        {{--            // 'Content-Type': 'multipart/form-data',--}}
+        {{--            'Content-Type': 'multipart/form-data',--}}
+        {{--            // 'Content-Type': 'application/x-www-form-urlencoded',--}}
         {{--            'X-CSRF-TOKEN': token--}}
         {{--        },--}}
         {{--        body: formData--}}

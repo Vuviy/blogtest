@@ -43,22 +43,6 @@ class Article extends Controller
      */
     public function store(Request $request)
     {
-
-
-
-
-
-//        $data = $request->validate([
-//            'title' => 'required|min:5|max:70',
-//            'text' => 'required|min:5',
-//            'image' => 'image',
-//        ]);
-
-//        dd($request->all());
-
-
-//        dd(url()->current());
-
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:5|max:70',
             'text' => 'required|min:5',
@@ -70,24 +54,18 @@ class Article extends Controller
         }
 
         $data = ['title' => $request->title, 'text' => $request->text, 'new' => 1, 'user_id' => auth()->user()->id];
-//        dd($data);
 
         if($request->hasFile('image')){
-
             $file = $request->file('image')->store('images', 'public');
             $data['image'] = $file;
         }
 
         $article = \App\Models\Article::query()->create($data);
 
-
         Log::channel('crud')->info('Article created', ['user:' => auth()->user()->id, 'article id:' => $article->id]);
-
-//        $title = 'Edit';
 
         return response()->json(['success' => true, 'url' =>  url()->current().'/'. $article->id. '/edit'], 202);
 
-//        return redirect()->route('article.edit', ['article' => $article, 'title' => $title]);
     }
 
     /**
@@ -122,6 +100,14 @@ class Article extends Controller
         return view('admin.article_edit', ['article' => $article, 'title' => $title]);
     }
 
+
+
+    public function test(Request $request)
+    {
+        dd($request->all());
+    }
+
+
     /**
      * Update the specified resource in storage.
      *
@@ -132,7 +118,6 @@ class Article extends Controller
     public function update(Request $request, $id)
     {
 
-//        dd($request->all());
 
 //        $validator = Validator::make($request->all(), [
 //            'title' => 'required|min:5|max:70|string',
@@ -173,7 +158,6 @@ class Article extends Controller
 
         $article->update($data);
 
-
         Log::channel('crud')->info('Article updated', ['user:' => auth()->user()->id, 'article id:' => $article->id]);
         $title = 'Edit';
 
@@ -200,7 +184,6 @@ class Article extends Controller
 
         $articles = \App\Models\Article::latest()->where('user_id', auth()->user()->id)->paginate(10);
 
-//        return view('admin.admin', ['articles' => $articles]);
         return redirect()->route('admin');
     }
 
