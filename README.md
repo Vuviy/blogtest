@@ -27,9 +27,9 @@ MAIL_HOST=smtp.gmail.com
 
 MAIL_PORT=465
 
-MAIL_USERNAME=vova.banudz@gmail.com
+MAIL_USERNAME=******@gmail.com
 
-MAIL_PASSWORD=pztpfrarkfvyhdxu
+MAIL_PASSWORD=****************
 
 ## Other
 
